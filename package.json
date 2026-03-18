@@ -1,4 +1,22 @@
 {
+  "name": "sit725_s225784318",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/s225784318-Vaibhavkumar/SIT725_s225784318#readme",
+  "bugs": {
+    "url": "https://github.com/s225784318-Vaibhavkumar/SIT725_s225784318/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/s225784318-Vaibhavkumar/SIT725_s225784318.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "express": "^5.2.1"
   }
