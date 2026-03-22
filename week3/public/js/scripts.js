@@ -34,7 +34,8 @@ const cardList = [
     
     $(document).ready(function(){
         $('.materialboxed').materialbox();
-        $('#clickMe').click(()=>{
+        $('.modal').modal();
+        $('#clickMeButton').click(()=>{
             clickMe();
         })
         addCards(cardList);
