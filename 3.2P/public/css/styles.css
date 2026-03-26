@@ -1,0 +1,60 @@
+nav {
+    background-color:#457c57;
+  }
+  .navbar-size {
+    width: 90%;
+    margin: 0 auto;
+  }
+  .user-image-size {
+    height: 100px;
+    margin: 4px 0;
+  }
+  .main-body {
+    background-color: #80caa1;
+    color: white;
+    height: calc(100vh - 10px);
+  }
+  
+  .lobster_font {
+    font-family: "Lobster", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .materialboxed-image {
+    width: 40%;
+    height: auto; /* Maintain aspect ratio */
+    display: block;
+    margin: 0 auto; /* Center the image */
+}
+.click-me-button {
+    background-color: #353726;
+    margin-bottom: 10px;
+  }
+
+  #card-section .card {
+    overflow: hidden;
+  }
+
+  #card-section .card .card-image {
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f7f1;
+  }
+
+  #card-section .card .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 10px;
+  }
+
+  #card-section .card .card-content,
+  #card-section .card .card-content a,
+  #card-section .card .card-reveal,
+  #card-section .card .card-reveal .card-text {
+    color: #2f3b2f;
+  }
+  
