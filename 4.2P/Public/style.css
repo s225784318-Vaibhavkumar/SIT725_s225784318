@@ -41,7 +41,6 @@ header p {
     display: flex;
     gap: 10px;
     margin-bottom: 30px;
-    flex-wrap: wrap;
 }
 
 input {
@@ -57,7 +56,7 @@ input:focus {
     border-color: #74b9ff;
 }
 
-#btn-add{
+#add-btn {
     padding: 12px 25px;
     background-color: #00b894;
     color: white;
@@ -72,16 +71,10 @@ input:focus {
     background-color: #00a885;
 }
 
-.status-message {
-    color: #c0392b;
-    min-height: 24px;
-    margin-bottom: 10px;
-}
-
 .book-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
+    gap: 200px;
     margin-top: 20px;
 }
 
@@ -119,25 +112,18 @@ input:focus {
     background-color: #ff7675;
     color: white;
     border: none;
-    padding: 8px 15px;
+    padding: 8px 6px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 0.8rem;
     align-items: center;
     align-content: center;
     align-self: center;
+    
 }
 
 .delete-btn:hover {
     background-color: #d63031;
-}
-
-.book-row {
-    list-style: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
 }
 
 hr {
@@ -151,4 +137,3 @@ hr {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
-

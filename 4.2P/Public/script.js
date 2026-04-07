@@ -1,72 +1,76 @@
 const API = "/books";
 
-async function readJsonResponse(res) {
-    const text = await res.text();
+function showError(message) {
+    alert(message);
+}
 
-    if (!text) {
-        return {};
-    }
+async function requestJson(url, options = {}) {
+    let res;
 
     try {
-        return JSON.parse(text);
-    } catch (error) {
-        throw new Error("Server returned an invalid response");
+        res = await fetch(url, options);
+    } catch (err) {
+        throw new Error("Cannot reach the server. Open the app from http://localhost:3000 and make sure npm start is running.");
     }
+
+    let data = null;
+    try {
+        data = await res.json();
+    } catch (err) {
+        data = null;
+    }
+
+    if (!res.ok) {
+        const message = data?.message || `Request failed with status ${res.status}`;
+        throw new Error(message);
+    }
+
+    return data;
 }
 
 async function loadBooks() {
-    const list = document.getElementById("bookList");
-    const statusMessage = document.getElementById("statusMessage");
-    list.innerHTML = "";
-    statusMessage.textContent = "";
-
     try {
-        const res = await fetch(API);
-        const books = await readJsonResponse(res);
-
-        if (!res.ok) {
-            throw new Error(books.message || "Unable to load books");
-        }
-
-        if (books.length === 0) {
-            statusMessage.textContent = "No books added yet.";
-            return;
-        }
+        const books = await requestJson(API);
+        const list = document.getElementById("bookList");
+        list.innerHTML = "";
 
         books.forEach((book) => {
             const li = document.createElement("li");
-            li.className = "book-row";
+            li.className = "list-group-item d-flex justify-content-between align-items-center";
+
             li.innerHTML = `
-                <article class="book-card">
-                    <h3>${book.title}</h3>
-                    <p>${book.author}</p>
-                </article>
-                <button class="delete-btn" onclick="deleteBook('${book._id}')" title="Delete Book">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
+            <hr>
+            <section>
+                <div class="book-grid">
+                    <article class="book-card">
+                        <h3>${book.title}</h3>
+                        <p>${book.author}</p>
+                    </article>
+                    <button class="delete-btn" onclick="deleteBook('${book._id}')" title="Delete Book">
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+            </section>
             `;
+
             list.appendChild(li);
         });
-    } catch (error) {
-        statusMessage.textContent = error.message || "Unable to load books";
+    } catch (err) {
+        showError(err.message);
     }
 }
 
 async function addBook() {
-    const titleInput = document.getElementById("title");
-    const authorInput = document.getElementById("author");
-    const statusMessage = document.getElementById("statusMessage");
-
-    const title = titleInput.value.trim();
-    const author = authorInput.value.trim();
+    const title = document.getElementById("title").value.trim();
+    const author = document.getElementById("author").value.trim();
 
     if (!title || !author) {
-        statusMessage.textContent = "Please enter all fields.";
+        showError("Please enter all fields");
         return;
     }
 
     try {
-        const res = await fetch(API, {
+        await requestJson(API, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -78,34 +82,21 @@ async function addBook() {
             })
         });
 
-        const data = await readJsonResponse(res);
+        document.getElementById("title").value = "";
+        document.getElementById("author").value = "";
 
-        if (!res.ok) {
-            throw new Error(data.message || "Unable to add book");
-        }
-
-        titleInput.value = "";
-        authorInput.value = "";
-        loadBooks();
-    } catch (error) {
-        statusMessage.textContent = error.message || "Unable to add book";
+        await loadBooks();
+    } catch (err) {
+        showError(err.message);
     }
 }
 
 async function deleteBook(id) {
-    const statusMessage = document.getElementById("statusMessage");
-
     try {
-        const res = await fetch(`${API}/${id}`, { method: "DELETE" });
-        const data = await readJsonResponse(res);
-
-        if (!res.ok) {
-            throw new Error(data.message || "Unable to delete book");
-        }
-
-        loadBooks();
-    } catch (error) {
-        statusMessage.textContent = error.message || "Unable to delete book";
+        await requestJson(`${API}/${id}`, { method: "DELETE" });
+        await loadBooks();
+    } catch (err) {
+        showError(err.message);
     }
 }
 
