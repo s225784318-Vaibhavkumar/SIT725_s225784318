@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MongoDB Book Catalog</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <!-- <p class="eyebrow">SIT725 Week 5.3P</p> -->
+        <h1>Book Collection</h1>
+        <p class="subtitle">Load titles from MongoDB, then select any book to inspect its full details.</p>
+        <button id="loadBooksBtn" class="load-button" type="button">Get All Books</button>
+      </section>
+
+      <section class="catalog-layout">
+        <aside class="catalog-panel">
+          <div class="panel-heading">
+            <h2>Books</h2>
+            <p>Title and price in AUD</p>
+          </div>
+          <div id="booksList" class="books-list">
+            <p class="status">Click "Get All Books" to load the catalog.</p>
+          </div>
+        </aside>
+
+        <section class="details-panel">
+          <div class="panel-heading">
+            <h2>Book Details</h2>
+            <p>Selected title information</p>
+          </div>
+          <div id="bookDetails" class="book-details">
+            <p class="status">Select a book after loading the catalog.</p>
+          </div>
+        </section>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
