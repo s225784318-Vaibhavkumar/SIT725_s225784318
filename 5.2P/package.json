@@ -1,0 +1,13 @@
+{
+  "name": "5.2p-books-catalog",
+  "version": "1.0.0",
+  "description": "Books catalog web app using MVC with in-memory data",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
