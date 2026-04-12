@@ -1,0 +1,233 @@
+:root {
+    --bg: #f5efe7;
+    --bg-accent: #e5d2be;
+    --panel: rgba(255, 250, 244, 0.92);
+    --panel-strong: #fffdf9;
+    --text: #2f241b;
+    --muted: #746255;
+    --accent: #9f4f22;
+    --accent-strong: #7e3711;
+    --border: rgba(133, 95, 69, 0.18);
+    --shadow: 0 24px 60px rgba(69, 39, 15, 0.12);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--text);
+    background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.9), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(212, 161, 118, 0.28), transparent 30%),
+        linear-gradient(135deg, var(--bg) 0%, var(--bg-accent) 100%);
+}
+
+.page {
+    width: min(1180px, 100%);
+    margin: 0 auto;
+    padding: 40px 20px 56px;
+}
+
+.hero {
+    background: linear-gradient(135deg, rgba(255, 251, 247, 0.95), rgba(248, 237, 223, 0.92));
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: 32px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+}
+
+.eyebrow {
+    color: var(--accent);
+    font-size: 0.82rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+h1 {
+    font-size: clamp(2.25rem, 5vw, 4rem);
+    line-height: 1;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    max-width: 660px;
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 22px;
+}
+
+.load-button {
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+    color: #fff;
+    padding: 14px 26px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 16px 30px rgba(126, 55, 17, 0.22);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.load-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 34px rgba(126, 55, 17, 0.28);
+}
+
+.catalog-layout {
+    display: grid;
+    grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);
+    gap: 24px;
+}
+
+.catalog-panel,
+.details-panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(8px);
+}
+
+.panel-heading {
+    margin-bottom: 18px;
+}
+
+.panel-heading h2 {
+    font-size: 1.45rem;
+    margin-bottom: 4px;
+}
+
+.panel-heading p {
+    color: var(--muted);
+}
+
+.books-list {
+    display: grid;
+    gap: 14px;
+}
+
+.book-item {
+    width: 100%;
+    border: 1px solid rgba(126, 55, 17, 0.12);
+    border-radius: 18px;
+    background: var(--panel-strong);
+    padding: 18px;
+    text-align: left;
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.book-item:hover,
+.book-item.active {
+    transform: translateY(-2px);
+    border-color: rgba(126, 55, 17, 0.4);
+    box-shadow: 0 14px 24px rgba(94, 54, 27, 0.12);
+}
+
+.book-item-title,
+.book-item-price {
+    display: block;
+}
+
+.book-item-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.book-item-price {
+    color: var(--accent-strong);
+    font-weight: 700;
+}
+
+.book-details {
+    min-height: 100%;
+}
+
+.detail-card {
+    background: var(--panel-strong);
+    border: 1px solid rgba(126, 55, 17, 0.12);
+    border-radius: 20px;
+    padding: 24px;
+}
+
+.detail-label {
+    color: var(--accent);
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.detail-card h3 {
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    margin-bottom: 22px;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.detail-grid div {
+    background: rgba(245, 239, 231, 0.85);
+    border-radius: 16px;
+    padding: 14px 16px;
+}
+
+.detail-grid dt {
+    color: var(--muted);
+    font-size: 0.92rem;
+    margin-bottom: 6px;
+}
+
+.detail-grid dd {
+    font-size: 1.02rem;
+    font-weight: 700;
+}
+
+.summary-block {
+    line-height: 1.7;
+    color: var(--text);
+}
+
+.status {
+    color: var(--muted);
+    text-align: center;
+    padding: 28px 12px;
+}
+
+@media (max-width: 860px) {
+    .catalog-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 560px) {
+    .page {
+        padding-inline: 14px;
+    }
+
+    .hero,
+    .catalog-panel,
+    .details-panel {
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .detail-grid {
+        grid-template-columns: 1fr;
+    }
+}

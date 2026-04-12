@@ -1,0 +1,16 @@
+{
+  "name": "5.3p-books-catalog",
+  "version": "1.0.0",
+  "description": "Books catalog web app using MVC with MongoDB data",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node seed.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.19.1"
+  }
+}
