@@ -1,10 +1,28 @@
-
+/**
+ * SIT725 – 5.4D Validation Tests (MANDATORY TEMPLATE)
+ *
+ * HOW TO RUN: (Node.js 18+ is required)
+ *   1. Start MongoDB
+ *   2. Start your server (npm start)
+ *   3. node validation-tests.js
+ *
+ * DO NOT MODIFY:
+ *   - Output format (TEST|, SUMMARY|, COVERAGE|)
+ *   - test() function signature
+ *   - Exit behaviour
+ *   - coverageTracker object
+ *   - Logging structure
+ *
+ * YOU MUST:
+ *   - Modify makeValidBook() to satisfy your schema rules
+ *   - Add sufficient tests to meet coverage requirements
+ */
 
 const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
 const API_BASE = "/api/books";
 
 // =============================
-// INTERNAL STATE 
+// INTERNAL STATE (DO NOT MODIFY)
 // =============================
 
 const results = [];
@@ -23,7 +41,7 @@ const coverageTracker = {
 };
 
 // =============================
-// OUTPUTS FORMAT 
+// OUTPUTS FORMAT (DO NOT MODIFY)
 // =============================
 
 function logHeader(uniqueId) {
@@ -40,7 +58,7 @@ function logResult(r) {
 }
 
 function logSummary() {
-  const failed = results.filter((r) => !r.pass).length;
+  const failed = results.filter(r => !r.pass).length;
   console.log(
     `SUMMARY|pass=${failed === 0 ? "Y" : "N"}|failed=${failed}|total=${results.length}`
   );
@@ -50,15 +68,15 @@ function logSummary() {
 function logCoverage() {
   console.log(
     `COVERAGE|CREATE_FAIL=${coverageTracker.CREATE_FAIL}` +
-      `|UPDATE_FAIL=${coverageTracker.UPDATE_FAIL}` +
-      `|TYPE=${coverageTracker.TYPE}` +
-      `|REQUIRED=${coverageTracker.REQUIRED}` +
-      `|BOUNDARY=${coverageTracker.BOUNDARY}` +
-      `|LENGTH=${coverageTracker.LENGTH}` +
-      `|TEMPORAL=${coverageTracker.TEMPORAL}` +
-      `|UNKNOWN_CREATE=${coverageTracker.UNKNOWN_CREATE}` +
-      `|UNKNOWN_UPDATE=${coverageTracker.UNKNOWN_UPDATE}` +
-      `|IMMUTABLE=${coverageTracker.IMMUTABLE}`
+    `|UPDATE_FAIL=${coverageTracker.UPDATE_FAIL}` +
+    `|TYPE=${coverageTracker.TYPE}` +
+    `|REQUIRED=${coverageTracker.REQUIRED}` +
+    `|BOUNDARY=${coverageTracker.BOUNDARY}` +
+    `|LENGTH=${coverageTracker.LENGTH}` +
+    `|TEMPORAL=${coverageTracker.TEMPORAL}` +
+    `|UNKNOWN_CREATE=${coverageTracker.UNKNOWN_CREATE}` +
+    `|UNKNOWN_UPDATE=${coverageTracker.UNKNOWN_UPDATE}` +
+    `|IMMUTABLE=${coverageTracker.IMMUTABLE}`
   );
 }
 
@@ -82,6 +100,7 @@ async function http(method, path, body) {
 // =============================
 
 async function test({ id, name, method, path, expected, body, tags }) {
+
   const { status } = await http(method, path, body);
   const pass = status === expected;
 
@@ -92,43 +111,46 @@ async function test({ id, name, method, path, expected, body, tags }) {
   // treat missing or invalid tags as []
   const safeTags = Array.isArray(tags) ? tags : [];
 
-  safeTags.forEach((tag) => {
+  safeTags.forEach(tag => {
     if (Object.prototype.hasOwnProperty.call(coverageTracker, tag)) {
       coverageTracker[tag]++;
     }
   });
 }
 
-
+// =============================
+// STUDENT MUST MODIFY THESE
+// =============================
 
 function makeValidBook(id) {
   return {
     id,
-    title: "Clean Code",
-    author: "Robert Martin",
-    year: 2008,
-    genre: "Software",
-    summary: "A practical guide to writing readable and maintainable software.",
-    price: "34.95",
+    title: "Valid Title",
+    author: "Valid Author",
+    year: 2020,
+    genre: "Other",
+    summary: "Valid summary text that satisfies your rules.",
+    price: "9.99"
   };
 }
 
 function makeValidUpdate() {
   return {
-    title: "Clean Code Revised",
-    author: "Robert C. Martin",
-    year: 2009,
-    genre: "Software Engineering",
-    summary: "An updated edition focused on maintainable and expressive code.",
-    price: "39.95",
+    title: "Updated Title",
+    author: "Updated Author",
+    year: 2021,
+    genre: "Other",
+    summary: "Updated summary text.",
+    price: "10.50"
   };
 }
 
 // =============================
-// REQUIRED BASE TESTS 
+// REQUIRED BASE TESTS (DO NOT REMOVE)
 // =============================
 
 async function run() {
+
   const uniqueId = `b${Date.now()}`;
   logHeader(uniqueId);
 
@@ -143,7 +165,7 @@ async function run() {
     path: createPath,
     expected: 201,
     body: makeValidBook(uniqueId),
-    tags: [],
+    tags: []
   });
 
   // ---- T02 Duplicate ID ----
@@ -154,7 +176,7 @@ async function run() {
     path: createPath,
     expected: 409,
     body: makeValidBook(uniqueId),
-    tags: ["CREATE_FAIL"],
+    tags: ["CREATE_FAIL"]
   });
 
   // ---- T03 Immutable ID ----
@@ -165,7 +187,7 @@ async function run() {
     path: updatePath(uniqueId),
     expected: 400,
     body: { ...makeValidUpdate(), id: "b999" },
-    tags: ["UPDATE_FAIL", "IMMUTABLE"],
+    tags: ["UPDATE_FAIL", "IMMUTABLE"]
   });
 
   // ---- T04 Unknown field CREATE ----
@@ -175,8 +197,8 @@ async function run() {
     method: "POST",
     path: createPath,
     expected: 400,
-    body: { ...makeValidBook(`b${Date.now() + 1}`), hack: true },
-    tags: ["CREATE_FAIL", "UNKNOWN_CREATE"],
+    body: { ...makeValidBook(`b${Date.now()+1}`), hack: true },
+    tags: ["CREATE_FAIL", "UNKNOWN_CREATE"]
   });
 
   // ---- T05 Unknown field UPDATE ----
@@ -187,81 +209,23 @@ async function run() {
     path: updatePath(uniqueId),
     expected: 400,
     body: { ...makeValidUpdate(), hack: true },
-    tags: ["UPDATE_FAIL", "UNKNOWN_UPDATE"],
+    tags: ["UPDATE_FAIL", "UNKNOWN_UPDATE"]
   });
 
-  // ---- T06 Required field CREATE ----
-  await test({
-    id: "T06",
-    name: "Missing required title on create",
-    method: "POST",
-    path: createPath,
-    expected: 400,
-    body: {
-      id: `b${Date.now() + 2}`,
-      author: "Robert Martin",
-      year: 2008,
-      genre: "Software",
-      summary: "A practical guide to writing readable and maintainable software.",
-      price: "34.95",
-    },
-    tags: ["CREATE_FAIL", "REQUIRED"],
-  });
-
-  // ---- T07 Wrong TYPE CREATE ----
-  await test({
-    id: "T07",
-    name: "Wrong type for year on create",
-    method: "POST",
-    path: createPath,
-    expected: 400,
-    body: { ...makeValidBook(`b${Date.now() + 3}`), year: "not-a-number" },
-    tags: ["CREATE_FAIL", "TYPE"],
-  });
-
-  // ---- T08 BOUNDARY CREATE ----
-  await test({
-    id: "T08",
-    name: "Year below minimum on create",
-    method: "POST",
-    path: createPath,
-    expected: 400,
-    body: { ...makeValidBook(`b${Date.now() + 4}`), year: 1799 },
-    tags: ["CREATE_FAIL", "BOUNDARY"],
-  });
-
-  // ---- T09 LENGTH CREATE ----
-  await test({
-    id: "T09",
-    name: "Title too short on create",
-    method: "POST",
-    path: createPath,
-    expected: 400,
-    body: { ...makeValidBook(`b${Date.now() + 5}`), title: "It" },
-    tags: ["CREATE_FAIL", "LENGTH"],
-  });
-
-  // ---- T10 TEMPORAL CREATE ----
-  await test({
-    id: "T10",
-    name: "Future year on create",
-    method: "POST",
-    path: createPath,
-    expected: 400,
-    body: { ...makeValidBook(`b${Date.now() + 6}`), year: new Date().getFullYear() + 1 },
-    tags: ["CREATE_FAIL", "TEMPORAL"],
-  });
-
-  // ---- T11 Wrong TYPE UPDATE ----
-  await test({
-    id: "T11",
-    name: "Wrong type for price on update",
-    method: "PUT",
-    path: updatePath(uniqueId),
-    expected: 400,
-    body: { ...makeValidUpdate(), price: { amount: 12.5 } },
-    tags: ["UPDATE_FAIL", "TYPE"],
-  });
+  // =====================================
+  // STUDENTS MUST ADD ADDITIONAL TESTS
+  // =====================================
+  //
+  // Add tests covering:
+  // - REQUIRED
+  // - TYPE
+  // - BOUNDARY
+  // - LENGTH
+  // - TEMPORAL
+  // - UPDATE_FAIL
+  //
+  // Each test must include appropriate tags.
+  //
 
   const pass = logSummary();
   logCoverage();
@@ -269,7 +233,7 @@ async function run() {
   process.exit(pass ? 0 : 1);
 }
 
-run().catch((err) => {
+run().catch(err => {
   console.error("ERROR", err);
   process.exit(2);
 });
