@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study Sprint Board</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="layout">
+    <section class="hero">
+      <p class="eyebrow">SIT725 s225784318</p>
+      <h1>Study Sprint Board</h1>
+      <p class="subtitle">
+        A real-time idea board for your group project or revision session. When one user adds a study idea,
+        every connected browser updates instantly.
+      </p>
+    </section>
+
+    <section class="panel">
+      <form id="idea-form" class="idea-form">
+        <label for="idea-input">Add a new study idea</label>
+        <div class="input-row">
+          <input id="idea-input" name="idea" type="text" maxlength="80" placeholder="Example: Revise Socket.IO events">
+          <button type="submit">Send</button>
+        </div>
+        <p id="status" class="status" aria-live="polite"></p>
+      </form>
+
+      <div class="board-header">
+        <h2>Live Ideas</h2>
+        <span id="idea-count" class="badge">0 ideas</span>
+      </div>
+      <ul id="idea-list" class="idea-list"></ul>
+    </section>
+  </main>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
